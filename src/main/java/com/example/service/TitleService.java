@@ -8,6 +8,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 @Service
 public class TitleService {
@@ -31,8 +32,14 @@ public class TitleService {
         return titleDao.findAll(pageable);
     }
 
-    public Page<Title> findByTitle(String title, Integer pageNum, Integer pageSize){
+    public Page<Title> findByOriginalTitle(String title, Integer pageNum, Integer pageSize){
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);
-        return titleDao.findByName(title, pageable);
+        return titleDao.findByOriginalTitle(title, pageable);
     }
+
+    public List<Title> findByRelativeName(String nconst){
+        return titleDao.findByName(nconst);
+    }
+
+    
 }

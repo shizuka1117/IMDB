@@ -37,6 +37,13 @@ public class TitleController {
         return Result.success(titleService.findByTconst(tconst));
     }
 
+    @GetMapping("/{originalTitle}")
+    public Result<Page<Title>> findByOriginalTitlePage(@PathVariable String originalTitle,
+                                                       @RequestParam(defaultValue = "1") Integer pageNum,
+                                                       @RequestParam(defaultValue = "10") Integer pageSize){
+        return Result.success(titleService.findByOriginalTitle(originalTitle, pageNum, pageSize));
+    }
+
     @GetMapping("/page")
     public Result<Page<Title>> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
                                             @RequestParam(defaultValue = "10") Integer pageSize

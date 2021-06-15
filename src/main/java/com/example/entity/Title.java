@@ -16,7 +16,7 @@ public class Title {
     private int start_year;
     private int end_year;
     private int runtime_minutes;
-    @OneToOne(targetEntity = Rating.class, fetch = FetchType.LAZY)
+    /*@OneToOne(targetEntity = Rating.class, fetch = FetchType.LAZY)
     private Rating rating;
     @OneToMany(targetEntity = Aka.class, fetch = FetchType.LAZY)
     @JoinColumn(name="tconst")
@@ -25,7 +25,7 @@ public class Title {
     private Set<Genre> genres = new HashSet<Genre>();
     @ManyToMany(targetEntity = Name.class, fetch = FetchType.LAZY)
     private Set<Name> names = new HashSet<Name>();
-
+*/
     public String getTconst() {
         return tconst;
     }
@@ -81,7 +81,7 @@ public class Title {
     public void setRuntime_minutes(int runtime_minutes) {
         this.runtime_minutes = runtime_minutes;
     }
-
+/*
     public Rating getRating() {
         return rating;
     }
@@ -105,4 +105,5 @@ public class Title {
     public void setGenres(Set<Genre> genres) {
         this.genres = genres;
     }
+ */
 }

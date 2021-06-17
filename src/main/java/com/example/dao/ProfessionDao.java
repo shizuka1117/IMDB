@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface ProfessionDao extends JpaRepository<Profession, String> {
 
-    @Query(value = "select profession.* from name natural join name_pro natural join profession where nconst = %?1%", nativeQuery = true)
-    List<Profession> findProfessionByName();
+    @Query(value = "select profession.* from name_pro natural join profession where nconst = ?1", nativeQuery = true)
+    List<Profession> findProfessionByName(String nconst);
 }

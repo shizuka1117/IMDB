@@ -13,10 +13,15 @@ import java.util.List;
 @Repository
 public interface TitleDao extends JpaRepository<Title, String> {
 
-    @Query(value = "select * from title where original_title = %?1%", nativeQuery = true)
+    @Query(value = "select * from title where original_title like %?1%", nativeQuery = true)
     Page<Title> findByOriginalTitle(String original_title, Pageable pageable);
 
-    @Query(value = "with tmp as (select * from name where nconst = %?1%)\n" +
-            "select title.* from tmp natural join title_name natural join title", nativeQuery = true)
-    List<Title> findByName(String nconst);
+    @Query(value = "select title.* from title_name natural join title where title_name.nconst = ?1", nativeQuery = true)
+    Page<Title> findByName(String nconst, Pageable pageable);
+
+    @Query(value = "select * from title where type = ?1 ", nativeQuery = true)
+    Page<Title> findByType(String type, Pageable pageable);
+
+    @Query(value = "select * from title where tconst = ?1 ", nativeQuery = true)
+    Title findByTconst(String tconst);
 }

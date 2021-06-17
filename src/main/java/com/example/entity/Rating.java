@@ -11,8 +11,6 @@ public class Rating {
     double averageRating;
     @Column(name = "num_votes")
     int numVotes;
-    @OneToOne(targetEntity = Title.class)
-    Title title;
 
     public String getTconst() {
         return tconst;

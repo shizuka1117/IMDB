@@ -37,8 +37,8 @@ public class TitleController {
         return Result.success(titleService.findByTconst(tconst));
     }
 
-    @GetMapping("/{originalTitle}")
-    public Result<Page<Title>> findByOriginalTitlePage(@PathVariable String originalTitle,
+    @GetMapping("/originalTitle")
+    public Result<Page<Title>> findByOriginalTitlePage(@RequestParam(defaultValue = "") String originalTitle,
                                                        @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @RequestParam(defaultValue = "10") Integer pageSize){
         return Result.success(titleService.findByOriginalTitle(originalTitle, pageNum, pageSize));
@@ -49,5 +49,19 @@ public class TitleController {
                                             @RequestParam(defaultValue = "10") Integer pageSize
                                             ){
         return Result.success(titleService.findPage(pageNum, pageSize));
+    }
+
+    @GetMapping("/name")
+    public Result<Page<Title>> findByRelativeName(@RequestParam(defaultValue = "") String nconst,
+                                                  @RequestParam(defaultValue = "1") Integer pageNum,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize){
+        return Result.success(titleService.findByRelativeName(nconst, pageNum, pageSize));
+    }
+
+    @GetMapping("/best")
+    public Result<Page<Title>> findBestTitles(@RequestParam(defaultValue = "") String type,
+                                                  @RequestParam(defaultValue = "1") Integer pageNum,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize){
+        return Result.success(titleService.findBestTitle(type, pageNum, pageSize));
     }
 }

@@ -8,9 +8,10 @@ import java.util.List;
 
 public interface RatingDao extends JpaRepository<Rating, String> {
 
-    @Query(value = "select * from rating where tconst = %?1%", nativeQuery = true)
+    @Query(value = "select * from rating where tconst = ?1", nativeQuery = true)
     Rating findRatingByTconst(String tconst);
 
-    @Query(value = "select * from ratings where num_votes > 10000 and average_rating >= 7 order by average_rating desc", nativeQuery = true)
-    List<Rating> findBestRatings();
+    //where num_votes > 10000 and average_rating >= 7 order by average_rating desc
+    @Query(value = "select tconst from rating where num_votes > 10000 and average_rating >= 7 order by average_rating desc", nativeQuery = true)
+    List<String> findBestRatings();
 }

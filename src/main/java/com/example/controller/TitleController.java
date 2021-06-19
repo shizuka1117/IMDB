@@ -14,7 +14,7 @@ public class TitleController {
     @Resource
     private TitleService titleService;
 
-    @PostMapping
+    /*@PostMapping
     public Result add(@RequestBody Title title){
         titleService.save(title);
         return Result.success();
@@ -30,38 +30,39 @@ public class TitleController {
     public Result delete(@PathVariable String tconst){
         titleService.del(tconst);
         return Result.success();
-    }
+    }*/
 
     @GetMapping("/{tconst}")
-    public Result findByTconst(@PathVariable String tconst){
+    public Result getTitleByTconst(@PathVariable String tconst){
         return Result.success(titleService.findByTconst(tconst));
     }
 
     @GetMapping("/originalTitle")
-    public Result<Page<Title>> findByOriginalTitlePage(@RequestParam(defaultValue = "") String originalTitle,
+    public Result<Page<Title>> getTitleByOriginalTitle(@RequestParam(defaultValue = "") String originalTitle,
+                                                       @RequestParam(defaultValue = "") String type,
                                                        @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @RequestParam(defaultValue = "10") Integer pageSize){
-        return Result.success(titleService.findByOriginalTitle(originalTitle, pageNum, pageSize));
+        return Result.success(titleService.findByOriginalTitle(originalTitle, type, pageNum, pageSize));
     }
 
     @GetMapping("/page")
-    public Result<Page<Title>> findPage(@RequestParam(defaultValue = "1") Integer pageNum,
+    public Result<Page<Title>> getTitlePages(@RequestParam(defaultValue = "1") Integer pageNum,
                                             @RequestParam(defaultValue = "10") Integer pageSize
                                             ){
         return Result.success(titleService.findPage(pageNum, pageSize));
     }
 
-    @GetMapping("/name")
-    public Result<Page<Title>> findByRelativeName(@RequestParam(defaultValue = "") String nconst,
+    @GetMapping("/relativeTitles/{nconst}")
+    public Result<Page<Title>> getTitlesByRelativeName(@PathVariable String nconst,
                                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "10") Integer pageSize){
         return Result.success(titleService.findByRelativeName(nconst, pageNum, pageSize));
     }
 
-    @GetMapping("/best")
-    public Result<Page<Title>> findBestTitles(@RequestParam(defaultValue = "") String type,
+    @GetMapping("/bestTitles/{type}")
+    public Result<Page<Title>> getBestTitles(@PathVariable String type,
                                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "10") Integer pageSize){
-        return Result.success(titleService.findBestTitle(type, pageNum, pageSize));
+        return Result.success(titleService.findBestTitles(type, pageNum, pageSize));
     }
 }

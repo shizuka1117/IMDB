@@ -40,8 +40,10 @@ public class TitleService {
         return titleDao.findAll(pageable);
     }
 
-    public Page<Title> findByOriginalTitle(String title, Integer pageNum, Integer pageSize){//通过originalTitle模糊查询获取相关title
+    public Page<Title> findByOriginalTitle(String title, String type, Integer pageNum, Integer pageSize){//通过originalTitle模糊查询获取相关title
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        if(type!=null)
+            return titleDao.findByOriginalTitle(title, type, pageable);
         return titleDao.findByOriginalTitle(title, pageable);
     }
 
@@ -51,7 +53,7 @@ public class TitleService {
     }
 
     //获取某一类型的best列表
-    public Page<Title> findBestTitle(String type, Integer pageNum, Integer pageSize){
+    public Page<Title> findBestTitles(String type, Integer pageNum, Integer pageSize){
         List<String> bestTconst = ratingDao.findBestRatings();
         List<Title> bestTitle = new ArrayList<>();
         //bestTitle = titleDao.findAllById(bestTconst);

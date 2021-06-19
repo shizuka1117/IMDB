@@ -16,6 +16,9 @@ public interface TitleDao extends JpaRepository<Title, String> {
     @Query(value = "select * from title where original_title like %?1%", nativeQuery = true)
     Page<Title> findByOriginalTitle(String original_title, Pageable pageable);
 
+    @Query(value = "select * from title where original_title like %?1% and type = ?2", nativeQuery = true)
+    Page<Title> findByOriginalTitle(String original_title, String type, Pageable pageable);
+
     @Query(value = "select title.* from title_name natural join title where title_name.nconst = ?1", nativeQuery = true)
     Page<Title> findByName(String nconst, Pageable pageable);
 

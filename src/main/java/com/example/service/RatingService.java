@@ -11,7 +11,7 @@ public class RatingService {
     @Resource
     RatingDao ratingDao;
 
-    Rating findRating(String tconst){
+    public Rating findByTconst(String tconst){
         return ratingDao.findById(tconst).orElse(null);
     }
 }

@@ -76,7 +76,8 @@
                 pageNum: 1,
                 pageSize: 8,
                 dialogVisible: false,
-                form: {}
+                form: {},
+                nconst:''
             },
             created() {
                 this.loadTable(this.pageNum);
@@ -84,7 +85,7 @@
             methods:{
                 loadTable(num) {
                     this.pageNum = num;
-                    $.get("/title/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+                    $.get("/name/nconst/"+this.nconst).then(res => {
                         this.page = res.data;
                     });
                 },

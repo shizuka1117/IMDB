@@ -13,7 +13,7 @@ public class AkaService {
     @Resource
     AkaDao akaDao;
 
-    public List<Aka> findByTconst(String tconst, Integer pageNum, Integer pageSize){//通过name获取相关title
+    public List<Aka> findByRelativeTitle(String tconst, Integer pageNum, Integer pageSize){//通过name获取相关title
         return akaDao.findAkaByTconst(tconst);
     }
 }

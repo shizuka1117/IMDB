@@ -11,5 +11,5 @@ import java.util.List;
 public interface GenreDao extends JpaRepository<Genre, String> {
     @Query(value = "select genres.* from title_genres natural join genres where tconst = ?1",
             nativeQuery = true)
-    List<Genre> findGenresByTitle(String tconst);
+    List<Genre> findByRelativeTitle(String tconst);
 }

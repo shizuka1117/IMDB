@@ -18,6 +18,6 @@ public class GenreService {
     private GenreDao genreDao;
 
     public List<Genre> findByRelativeTitle(String tconst, Integer pageNum, Integer pageSize){//通过name获取相关title
-        return genreDao.findGenresByTitle(tconst);
+        return genreDao.findByRelativeTitle(tconst);
     }
 }

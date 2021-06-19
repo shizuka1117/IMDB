@@ -14,7 +14,7 @@ public class ProfessionService {
     @Resource
     ProfessionDao professionDao;
 
-    List<Profession> findProfession(String nconst){
+    public List<Profession> findByRelativeName(String nconst){
         return professionDao.findProfessionByName(nconst);
     }
 }

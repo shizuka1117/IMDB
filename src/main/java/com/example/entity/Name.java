@@ -12,9 +12,9 @@ public class Name {
     @Column(name="primary_name")
     String primaryName;
     @Column(name="birth_year")
-    int birthYear;
+    Integer birthYear;
     @Column(name="death_year")
-    int deathYear;
+    Integer deathYear;
     @ManyToMany(targetEntity = Title.class, fetch = FetchType.LAZY)
     private Set<Title> titles = new HashSet<Title>();
     @ManyToMany(targetEntity = Profession.class, fetch = FetchType.LAZY)
@@ -36,16 +36,22 @@ public class Name {
         this.primaryName = primaryName;
     }
 
-    public int getBirthYear() {
-        return birthYear;
+    public String getBirthYear() {
+        if(birthYear!=0)
+            return birthYear.toString();
+        else
+            return "未知";
     }
 
     public void setBirthYear(int birthYear) {
         this.birthYear = birthYear;
     }
 
-    public int getDeathYear() {
-        return deathYear;
+    public String getDeathYear() {
+        if(deathYear!=0)
+            return deathYear.toString();
+        else
+            return "未知";
     }
 
     public void setDeathYear(int deathYear) {

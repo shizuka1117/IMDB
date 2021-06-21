@@ -4,6 +4,10 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import java.text.DecimalFormat;
+
+import static java.lang.StrictMath.floor;
+
 @Table(name="new_title")
 @Entity
 public class Title {
@@ -12,9 +16,9 @@ public class Title {
     private String type;
     private String original_title;
     private boolean is_adult;
-    private int start_year;
-    private int end_year;
-    private int runtime_minutes;
+    private Integer start_year;
+    private Integer end_year;
+    private Integer runtime_minutes;
     private Double average_rating;
     private Integer num_votes = 0;
 
@@ -50,40 +54,49 @@ public class Title {
         this.original_title = original_title;
     }
 
-    public int getStart_year() {
-        return start_year;
+    public String getStart_year() {
+        if(start_year==0)
+            return "未知";
+        else
+            return start_year.toString();
     }
 
     public void setStart_year(int start_year) {
         this.start_year = start_year;
     }
 
-    public int getEnd_year() {
-        return end_year;
+    public String getEnd_year() {
+        if(end_year==0)
+            return "未知";
+        else
+            return end_year.toString();
     }
 
     public void setEnd_year(int end_year) {
         this.end_year = end_year;
     }
 
-    public int getRuntime_minutes() {
-        return runtime_minutes;
+    public String getRuntime_minutes() {
+        if(runtime_minutes==0)
+            return "未知";
+        else
+            return runtime_minutes.toString();
     }
 
     public void setRuntime_minutes(int runtime_minutes) {
         this.runtime_minutes = runtime_minutes;
     }
 
-    public Double getAverage_rating() {
-        return average_rating;
+    public String getAverage_rating() {
+        DecimalFormat df2 = new DecimalFormat("#.00");
+        if(average_rating!=null)
+            return df2.format(average_rating.doubleValue());
+        else
+            return "未知";
     }
 
     public void setAverage_rating(Double average_rating) {
-        if(average_rating!=null)
-            this.average_rating = 0.0;
-
-        else
-            this.average_rating = average_rating;
+        this.average_rating = average_rating;
     }
 
     public Integer getNum_votes() {
@@ -91,9 +104,6 @@ public class Title {
     }
 
     public void setNum_votes(Integer num_votes) {
-        if(num_votes!=null)
-            this.num_votes = 0;
-        else
-            this.num_votes = num_votes;
+        this.num_votes = num_votes;
     }
 }

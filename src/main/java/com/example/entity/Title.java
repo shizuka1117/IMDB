@@ -15,8 +15,8 @@ public class Title {
     private int start_year;
     private int end_year;
     private int runtime_minutes;
-    private double average_rating;
-    private int num_votes;
+    private Double average_rating;
+    private Integer num_votes = 0;
 
     public String getTconst() {
         return tconst;
@@ -74,19 +74,26 @@ public class Title {
         this.runtime_minutes = runtime_minutes;
     }
 
-    public double getAverage_rating() {
+    public Double getAverage_rating() {
         return average_rating;
     }
 
-    public void setAverage_rating(double average_rating) {
-        this.average_rating = average_rating;
+    public void setAverage_rating(Double average_rating) {
+        if(average_rating!=null)
+            this.average_rating = 0.0;
+
+        else
+            this.average_rating = average_rating;
     }
 
-    public int getNum_votes() {
+    public Integer getNum_votes() {
         return num_votes;
     }
 
-    public void setNum_votes(int num_votes) {
-        this.num_votes = num_votes;
+    public void setNum_votes(Integer num_votes) {
+        if(num_votes!=null)
+            this.num_votes = 0;
+        else
+            this.num_votes = num_votes;
     }
 }

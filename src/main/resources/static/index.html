@@ -85,7 +85,7 @@
             methods:{
                 loadTable(num) {
                     this.pageNum = num;
-                    $.get("/title/page"+this.nconst).then(res => {
+                    $.get("/title/page?pageNum"+this.pageNum+"&pageSize="+this.pageSize).then(res => {
                         this.page = res.data;
                     });
                 },

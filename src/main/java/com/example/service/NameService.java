@@ -18,6 +18,10 @@ public class NameService {
     public Name findByNconst(String nconst){//根据nconst查找相关name
         return nameDao.findById(nconst).orElse(null);
     }
+    public Page<Name> findPage(Integer pageNum, Integer pageSize){//默认获取所有title
+        Pageable pageable = PageRequest.of(pageNum-1, pageSize);
+        return nameDao.findAll(pageable);
+    }
 
     public Page<Name> findByPrimaryName(String primaryName, Integer pageNum, Integer pageSize){//通过originalTitle模糊查询获取相关title
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);

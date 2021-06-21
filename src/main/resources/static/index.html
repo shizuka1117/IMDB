@@ -85,13 +85,13 @@
             methods:{
                 loadTable(num) {
                     this.pageNum = num;
-                    $.get("/name/nconst/"+this.nconst).then(res => {
+                    $.get("/title/page"+this.nconst).then(res => {
                         this.page = res.data;
                     });
                 },
                 btn(num){
                     this.pageNum = num;
-                    $.get("/title/originalTitle?originalTitle="+ this.name + "&pageNum=" + this.pageNum + "&pageSize="+ this.pageSize).then(res => {
+                    $.get("/title/bestTitles?type="+ this.name + "&pageNum=" + this.pageNum + "&pageSize="+ this.pageSize).then(res => {
                         this.page = res.data;
                     });
                 }

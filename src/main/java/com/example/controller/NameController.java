@@ -22,6 +22,12 @@ public class NameController {
         return Result.success(nameService.findByPrimaryName(primaryName, pageNum, pageSize));
     }
 
+    @GetMapping("/page")
+    public Result<Page<Name>> getNamePages(@RequestParam(defaultValue = "1") Integer pageNum,
+                                             @RequestParam(defaultValue = "10") Integer pageSize){
+        return Result.success(nameService.findPage(pageNum, pageSize));
+    }
+
     @GetMapping("/nconst/{nconst}")
     public Result<Name> getNamesByNconst(@PathVariable String nconst){
         return Result.success(nameService.findByNconst(nconst));

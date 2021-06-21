@@ -1,13 +1,12 @@
 package com.example.entity;
 
-import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Table(name="title")
+@Table(name="new_title")
 @Entity
 public class Title {
-
     @Id
     private String tconst;
     private String type;
@@ -16,16 +15,9 @@ public class Title {
     private int start_year;
     private int end_year;
     private int runtime_minutes;
-    /*@OneToOne(targetEntity = Rating.class, fetch = FetchType.LAZY)
-    private Rating rating;
-    @OneToMany(targetEntity = Aka.class, fetch = FetchType.LAZY)
-    @JoinColumn(name="tconst")
-    private Set<Aka> akas = new HashSet<Aka>();
-    @ManyToMany(targetEntity = Genre.class, fetch = FetchType.LAZY)
-    private Set<Genre> genres = new HashSet<Genre>();
-    @ManyToMany(targetEntity = Name.class, fetch = FetchType.LAZY)
-    private Set<Name> names = new HashSet<Name>();
-*/
+    private double average_rating;
+    private int num_votes;
+
     public String getTconst() {
         return tconst;
     }
@@ -81,29 +73,20 @@ public class Title {
     public void setRuntime_minutes(int runtime_minutes) {
         this.runtime_minutes = runtime_minutes;
     }
-/*
-    public Rating getRating() {
-        return rating;
+
+    public double getAverage_rating() {
+        return average_rating;
     }
 
-    public void setRating(Rating rating) {
-        this.rating = rating;
+    public void setAverage_rating(double average_rating) {
+        this.average_rating = average_rating;
     }
 
-    public Set<Aka> getAkas() {
-        return akas;
+    public int getNum_votes() {
+        return num_votes;
     }
 
-    public void setAkas(Set<Aka> akas) {
-        this.akas = akas;
+    public void setNum_votes(int num_votes) {
+        this.num_votes = num_votes;
     }
-
-    public Set<Genre> getGenres() {
-        return genres;
-    }
-
-    public void setGenres(Set<Genre> genres) {
-        this.genres = genres;
-    }
- */
 }

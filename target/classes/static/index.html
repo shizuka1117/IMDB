@@ -76,7 +76,8 @@
                 pageNum: 1,
                 pageSize: 8,
                 dialogVisible: false,
-                form: {}
+                form: {},
+                nconst:''
             },
             created() {
                 this.loadTable(this.pageNum);
@@ -84,13 +85,13 @@
             methods:{
                 loadTable(num) {
                     this.pageNum = num;
-                    $.get("/title/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+                    $.get("/title/page"+this.nconst).then(res => {
                         this.page = res.data;
                     });
                 },
                 btn(num){
                     this.pageNum = num;
-                    $.get("/title/best?pageNum=" + this.pageNum + "&pageSize="+ this.pageSize).then(res => {
+                    $.get("/title/bestTitles?type="+ this.name + "&pageNum=" + this.pageNum + "&pageSize="+ this.pageSize).then(res => {
                         this.page = res.data;
                     });
                 }

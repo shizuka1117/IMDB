@@ -33,7 +33,7 @@ public class TitleController {
     }*/
 
     @GetMapping("/{tconst}")
-    public Result getTitleByTconst(@PathVariable String tconst){
+    public Result<Title> getTitleByTconst(@PathVariable String tconst){
         return Result.success(titleService.findByTconst(tconst));
     }
 
@@ -59,8 +59,8 @@ public class TitleController {
         return Result.success(titleService.findByRelativeName(nconst, pageNum, pageSize));
     }
 
-    @GetMapping("/bestTitles/{type}")
-    public Result<Page<Title>> getBestTitles(@PathVariable String type,
+    @GetMapping("/bestTitles")
+    public Result<Page<Title>> getBestTitles(@RequestParam String type,
                                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "10") Integer pageSize){
         return Result.success(titleService.findBestTitles(type, pageNum, pageSize));

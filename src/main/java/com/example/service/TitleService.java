@@ -57,12 +57,20 @@ public class TitleService {
         List<String> bestTconst = ratingDao.findBestRatings();
         List<Title> bestTitle = new ArrayList<>();
         //bestTitle = titleDao.findAllById(bestTconst);
-
-        for(int i = 0; i<bestTconst.size(); i++){
-            Title title = titleDao.findById(bestTconst.get(i)).orElse(null);
-            if(title!=null&&(type==null||title.getType().equals(type)))
+        if(type.equals("all")){
+            for(int i = 0; i<bestTconst.size(); i++){
+                Title title = titleDao.findByTconst(bestTconst.get(i));
                 bestTitle.add(title);
+            }
         }
+        else{
+            for(int i = 0; i<bestTconst.size(); i++){
+                Title title = titleDao.findByTconst(bestTconst.get(i));
+                if(title.getType().equals(type))
+                    bestTitle.add(title);
+            }
+        }
+
 
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);
         int fromIndex = pageable.getPageSize()*pageable.getPageNumber();

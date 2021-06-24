@@ -88,7 +88,7 @@ public class Title {
     }
 
     public String getAverage_rating() {
-        DecimalFormat df2 = new DecimalFormat("#.00");
+        DecimalFormat df2 = new DecimalFormat("#.0");
         if(average_rating!=null)
             return df2.format(average_rating.doubleValue());
         else

@@ -25,9 +25,13 @@ public interface TitleDao extends JpaRepository<Title, String> {
     @Query(value = "select * from new_title where tconst = ?1 ", nativeQuery = true)
     Title findByTconst(String tconst);
 
-    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating", nativeQuery = true)
-    Page<Title> findBestTitles(Pageable pageable);
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating desc", nativeQuery = true)
+    Page<Title> findBestTitlesDesc(Pageable pageable);
 
-    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating", nativeQuery = true)
-    Page<Title> findBestTitlesWithType(String type, Pageable pageable);
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating desc", nativeQuery = true)
+    Page<Title> findBestTitlesAsc(Pageable pageable);
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating desc", nativeQuery = true)
+    Page<Title> findBestTitlesWithTypeDesc(String type, Pageable pageable);
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating desc", nativeQuery = true)
+    Page<Title> findBestTitlesWithTypeAsc(String type, Pageable pageable);
 }

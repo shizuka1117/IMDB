@@ -39,10 +39,9 @@ public class TitleController {
 
     @GetMapping("/originalTitle")
     public Result<Page<Title>> getTitleByOriginalTitle(@RequestParam(defaultValue = "") String originalTitle,
-                                                       @RequestParam(defaultValue = "") String type,
                                                        @RequestParam(defaultValue = "1") Integer pageNum,
                                                        @RequestParam(defaultValue = "10") Integer pageSize){
-        return Result.success(titleService.findByOriginalTitle(originalTitle, type, pageNum, pageSize));
+        return Result.success(titleService.findByOriginalTitle(originalTitle, pageNum, pageSize));
     }
 
     @GetMapping("/page")
@@ -52,8 +51,8 @@ public class TitleController {
         return Result.success(titleService.findPage(pageNum, pageSize));
     }
 
-    @GetMapping("/relativeTitles/{nconst}")
-    public Result<Page<Title>> getTitlesByRelativeName(@PathVariable String nconst,
+    @GetMapping("/relativeTitles")
+    public Result<Page<Title>> getTitlesByRelativeName(@RequestParam String nconst,
                                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "10") Integer pageSize){
         return Result.success(titleService.findByRelativeName(nconst, pageNum, pageSize));
@@ -61,8 +60,18 @@ public class TitleController {
 
     @GetMapping("/bestTitles")
     public Result<Page<Title>> getBestTitles(@RequestParam String type,
+                                                  @RequestParam String order,
                                                   @RequestParam(defaultValue = "1") Integer pageNum,
                                                   @RequestParam(defaultValue = "10") Integer pageSize){
-        return Result.success(titleService.findBestTitles(type, pageNum, pageSize));
+        return Result.success(titleService.findBestTitles(type, order, pageNum, pageSize));
     }
+
+    @GetMapping("/type")
+    public Result<Page<Title>> getTitlesByType(@PathVariable String type,
+                                               @RequestParam(defaultValue = "1") Integer pageNum,
+                                               @RequestParam(defaultValue = "10") Integer pageSize){
+        return Result.success(titleService.findByType(type, pageNum, pageSize));
+    }
+
+
 }

@@ -38,6 +38,10 @@
                     label="类型">
             </el-table-column>
             <el-table-column
+                    prop="average_rating"
+                    label="评分">
+            </el-table-column>
+            <el-table-column
                     fixed="right"
                     label="操作"
                     width="100">
@@ -85,7 +89,7 @@
             methods:{
                 loadTable(num) {
                     this.pageNum = num;
-                    $.get("/title/page?pageNum"+this.pageNum+"&pageSize="+this.pageSize).then(res => {
+                    $.get("/title/page?pageNum="+this.pageNum+"&pageSize="+this.pageSize).then(res => {
                         this.page = res.data;
                     });
                 },

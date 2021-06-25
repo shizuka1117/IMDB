@@ -70,7 +70,7 @@ public class TitleController {
     }
 
     @GetMapping("/type")
-    public Result<Page<Title>> getTitlesByType(@PathVariable String type,
+    public Result<Page<Title>> getTitlesByType(@RequestParam String type,
                                                @RequestParam(defaultValue = "1") Integer pageNum,
                                                @RequestParam(defaultValue = "10") Integer pageSize){
         return Result.success(titleService.findByType(type, pageNum, pageSize));

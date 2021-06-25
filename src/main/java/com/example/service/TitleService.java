@@ -57,13 +57,13 @@ public class TitleService {
     public Page<Title> findBestTitles(String type, String order, Integer pageNum, Integer pageSize){
         Pageable pageable = PageRequest.of(pageNum-1, pageSize);
         if(type.equals("all")){
-            if(order.equals("asc"))
+            if(order.compareTo("asc")==0)
                 return titleDao.findBestTitlesAsc(pageable);
             else
                 return titleDao.findBestTitlesDesc(pageable);
         }
         else{
-            if(order.equals("asc"))
+            if(order.compareTo("asc")==0)
                 return titleDao.findBestTitlesWithTypeAsc(type, pageable);
             else
                 return titleDao.findBestTitlesWithTypeDesc(type, pageable);

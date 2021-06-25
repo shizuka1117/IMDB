@@ -430,6 +430,7 @@
     },
     methods: {
       loadTable(num) {
+        alert('This is loadTable!');
         if(this.stateOfPage == 'works'){
           this.loadWorksTable(num);
         }
@@ -468,6 +469,7 @@
         });
       },
       btn(num) {
+        alert('This is btn!');
         this.pageNum = num;
         if(this.searchSelected == 'searchByTconst' || this.searchSelected == 'searchByOriginalName'){
           this.changeStateToWorksDetail();
@@ -521,6 +523,7 @@
       },
       typeSelectHandler(value) {
         if(this.stateOfPage == 'works'){
+          // alert('This is typeSelectHandler -> loadWorks');
           $.get("/title/type?type=" + value + "&pageNum=1&pageSize=8").then(res =>{
               this.worksPageData = res.data;
               this.total = res.data.totalElements;
@@ -616,6 +619,16 @@
         this.peopleDetailRelativeWorksDisplay = '';
         this.stateOfPage = 'peopleDetail';
       },
+
+      //  测试语句
+      test() {
+        alert('This is Test!');
+        this.peopleDetailRelativeWorksDisplay = 'none';
+        $.get("/name/primaryName/" + this.input + "?pageNum=" + this.pageNumTest + "&pageSize=" + this.pageSize).then(res => {
+          this.peopleDetailInformation = res.data;
+          this.total = res.data.totalElements;
+        });
+      }
     },
   })
 </script>

@@ -28,10 +28,10 @@ public interface TitleDao extends JpaRepository<Title, String> {
     @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating desc", nativeQuery = true)
     Page<Title> findBestTitlesDesc(Pageable pageable);
 
-    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating desc", nativeQuery = true)
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 order by average_rating asc", nativeQuery = true)
     Page<Title> findBestTitlesAsc(Pageable pageable);
     @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating desc", nativeQuery = true)
     Page<Title> findBestTitlesWithTypeDesc(String type, Pageable pageable);
-    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating desc", nativeQuery = true)
+    @Query(value = "select * from new_title where average_rating >= 7 and num_votes >= 10000 and type = ?1 order by average_rating asc", nativeQuery = true)
     Page<Title> findBestTitlesWithTypeAsc(String type, Pageable pageable);
 }

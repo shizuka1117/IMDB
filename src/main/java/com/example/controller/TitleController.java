@@ -33,8 +33,11 @@ public class TitleController {
     }*/
 
     @GetMapping("/{tconst}")
-    public Result<Title> getTitleByTconst(@PathVariable String tconst){
-        return Result.success(titleService.findByTconst(tconst));
+    public Result<Page<Title>> getTitleByTconst(@PathVariable String tconst,
+                                                @RequestParam(defaultValue = "1") Integer pageNum,
+                                                @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        return Result.success(titleService.findByTconst(tconst, pageNum, pageSize));
     }
 
     @GetMapping("/originalTitle")

@@ -29,8 +29,11 @@ public class NameController {
     }
 
     @GetMapping("/nconst/{nconst}")
-    public Result<Name> getNamesByNconst(@PathVariable String nconst){
-        return Result.success(nameService.findByNconst(nconst));
+    public Result<Page<Name>> getNamesByNconst(@PathVariable String nconst,
+                                               @RequestParam(defaultValue = "1") Integer pageNum,
+                                               @RequestParam(defaultValue = "10") Integer pageSize
+    ){
+        return Result.success(nameService.findByNconst(nconst, pageNum, pageSize));
     }
 
     @GetMapping("/relativeNames/{tconst}")

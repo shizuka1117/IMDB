@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src = "../vue.js" type="text/javascript" charset="UTF-8"></script>
+  <link rel="stylesheet" href = "../element.css">
+  <script src = "../jquery.min.js"></script>
+  <script src = "../element.js"></script>
+  <link rel="stylesheet" href = "../css/works.css">
+</head>
+<body>
+  <div id="app" class="wrapper">
+      <div class="navBar">
+        <div class="itemWrapper">
+<!--          导航栏-->
+          <a @click="loadWorksTable(1)">Works</a>
+          <a @click="loadPeopleTable(1)">People</a>
+          <a @click="loadRankTable(1)">Rank</a>
+          <div class="search">
+            <div class="input">
+              <el-input
+                      placeholder="请输入内容"
+                      prefix-icon="el-icon-search"
+                      v-model="input"
+              >
+              </el-input>
+            </div>
+            <div class="selectSearch">
+              <el-select v-model="searchSelected" placeholder="请选择">
+                <el-option
+
+                        v-for="item in searchSelectedOptions"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                        >
+                </el-option>
+              </el-select>
+            </div>
+            <div class="button">
+              <el-button type="primary" @click="btn()">搜索</el-button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="main">
+        <div class="selectTable">
+          <el-select v-model="TypeSelected" @change="typeSelectHandler" placeholder="请选择"
+                     :style="{display: TypeSelectedDisplay}">
+            <el-option
+                    v-for="item in worksTypeOptions"
+                    :key="item.value"
+                    :label="item.label"
+                    :value="item.value"
+            >
+            </el-option>
+          </el-select>
+          <div class="order" >
+            <el-radio-group v-model="orderSelect"
+                            @change="orderSelectHandler"
+                            :style="{display: orderSelectDisplay}"
+            >
+              <el-radio label="acs" style="color: white">升序</el-radio>
+              <el-radio label="desc" style="color: white">降序</el-radio>
+            </el-radio-group>
+          </div>
+        </div>
+        <div class="tableWrapper">
+          <el-table id="worksTable"
+                  :data="worksPageData.content"
+                  style="width: 100%"
+                  :style="{display: worksTableDisplay}"
+          >
+            <el-table-column
+                    prop="tconst"
+                    label="作品编号"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="original_title"
+                    label="标题"
+                    width="300">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="类型">
+            </el-table-column>
+            <el-table-column
+                    prop="start_year"
+                    label="开始年份">
+            </el-table-column>
+            <el-table-column
+                    prop="end_year"
+                    label="结束年份">
+            </el-table-column>
+            <el-table-column
+                    prop="runtime_minutes"
+                    label="时长">
+            </el-table-column>
+          </el-table>
+          <el-table id="peopleTable"
+                    :data="peoplePageData.content"
+                    style="width: 100%;"
+                    :style="{display: peopleTableDisplay}"
+          >
+            <el-table-column
+                    prop="nconst"
+                    label="nconst"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="primaryName"
+                    label="primaryName"
+                    width="300">
+            </el-table-column>
+            <el-table-column
+                    prop="birthYear"
+                    label="birthYear">
+            </el-table-column>
+            <el-table-column
+                    prop="deathYear"
+                    label="deathYear">
+            </el-table-column>
+          </el-table>
+          <el-table id="rankTable"
+                    :data="rankPageData.content"
+                    style="width: 100%;"
+                    :style="{display: rankTableDisplay}"
+          >
+            <el-table-column
+                    prop="tconst"
+                    label="作品编号"
+                    width="120">
+            </el-table-column>
+            <el-table-column
+                    prop="original_title"
+                    label="标题"
+                    width="300">
+            </el-table-column>
+            <el-table-column
+                    prop="type"
+                    label="类型">
+            </el-table-column>
+            <el-table-column
+                    prop="start_year"
+                    label="开始年份">
+            </el-table-column>
+            <el-table-column
+                    prop="average_rating"
+                    label="average_rating">
+            </el-table-column>
+          </el-table>
+
+          <el-row type="flex"
+                  justify="center"
+                  style="margin-top: 10px"
+                  :style="{display: pageDisplay}"
+          >
+            <el-pagination
+                    layout="prev, pager, next"
+                    :page-size="pageSize"
+                    :current-page="pageNum"
+                    @prev-click="loadTable"
+                    @current-change="loadTable"
+                    @next-click="loadTable"
+                    :total="total">
+            </el-pagination>
+          </el-row>
+        </div>
+        <div class="detailData">
+          <div class="worksDetail" :style="{display: worksDetailDisplay}">
+            This is worksDetail!
+            <el-collapse v-model="activeNames">
+              <div :style="{display: worksDetailDisplay}">
+                作品详情
+                <el-table id="worksTable"
+                          :data="worksDetailInformation.content"
+                          style="width: 100%"
+                >
+                  <el-table-column
+                          prop="tconst"
+                          label="tconst"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="original_title"
+                          label="original_title"
+                          width="300">
+                  </el-table-column>
+                  <el-table-column
+                          prop="type"
+                          label="type">
+                  </el-table-column>
+                  <el-table-column
+                          prop="start_year"
+                          label="start_year">
+                  </el-table-column>
+                  <el-table-column
+                          prop="end_year"
+                          label="end_year">
+                  </el-table-column>
+                  <el-table-column
+                          prop="runtime_minutes"
+                          label="runtime_minutes">
+                  </el-table-column>
+                  <el-table-column
+                          prop="average_rating"
+                          label="average_rating">
+                  </el-table-column>
+                  <el-table-column
+                          prop="num_votes"
+                          label="num_votes">
+                  </el-table-column>
+                </el-table>
+              </div>
+              <hr>
+              <div :style="{display: worksDetailRelativePeopleDisplay}">
+                相关人员
+                <el-table id="worksTable"
+                          :data="worksDetailRelativePeople.content"
+                          style="width: 100%;"
+                >
+                  <el-table-column
+                          prop="nconst"
+                          label="nconst"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="primaryName"
+                          label="primaryName"
+                          width="300">
+                  </el-table-column>
+                  <el-table-column
+                          prop="birthYear"
+                          label="birthYear">
+                  </el-table-column>
+                  <el-table-column
+                          prop="deathYear"
+                          label="deathYear">
+                  </el-table-column>
+                </el-table>
+                <el-row type="flex"
+                        justify="center"
+                        style="margin-top: 10px"
+                        :style="{display: worksDetailDisplay}"
+                ></el-row>
+              </div>
+            </el-collapse>
+          </div>
+          <div class="peopleDetail" :style="{display: peopleDetailDisplay}">
+            <el-collapse v-model="activeNames">
+              <div :style="{display: peopleDetailDisplay}">
+                人员详情
+                <el-table id="worksTable"
+                          :data="peopleDetailInformation.content"
+                          style="width: 100%"
+                >
+                  <el-table-column
+                          prop="nconst"
+                          label="nconst"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="primaryName"
+                          label="primaryName"
+                          width="300">
+                  </el-table-column>
+                  <el-table-column
+                          prop="birthYear"
+                          label="birthYear">
+                  </el-table-column>
+                  <el-table-column
+                          prop="deathYear"
+                          label="deathYear">
+                  </el-table-column>
+                </el-table>
+              </div>
+              <hr>
+              <div :style="{display: peopleDetailRelativeWorksDisplay}">
+                相关作品
+                <el-table id="worksTable"
+                          :data="peopleDetailRelativeWorks.content"
+                          style="width: 100%"
+                >
+                  <el-table-column
+                          prop="tconst"
+                          label="作品编号"
+                          width="120">
+                  </el-table-column>
+                  <el-table-column
+                          prop="original_title"
+                          label="标题"
+                          width="300">
+                  </el-table-column>
+                  <el-table-column
+                          prop="type"
+                          label="类型">
+                  </el-table-column>
+                  <el-table-column
+                          prop="start_year"
+                          label="开始年份">
+                  </el-table-column>
+                  <el-table-column
+                          prop="end_year"
+                          label="结束年份">
+                  </el-table-column>
+                  <el-table-column
+                          prop="runtime_minutes"
+                          label="时长">
+                  </el-table-column>
+                  <el-table-column
+                          prop="average_rating"
+                          label="平均评分">
+                  </el-table-column>
+                  <el-table-column
+                          prop="num_votes"
+                          label="投票数">
+                  </el-table-column>
+                </el-table>
+              </div>
+            </el-collapse>
+          </div>
+        </div>
+      </div>
+  </div>
+
+<script>
+  const app = new Vue({
+    el: '#app',
+    data: {
+      //其他
+      activeNames: [''],
+
+      message: 'HelloWorld',
+      input: '',
+
+      //页面状态
+      stateOfPage: '',
+
+      //页面信息展示
+      worksPageData: {},
+      peoplePageData: {},
+      rankPageData: {},
+      worksDetailInformation: {}, //作品详细信息展示
+      worksDetailRelativePeople: {},  //作品相关人员数据
+      peopleDetailInformation: {},    //人员详细信息展示
+      peopleDetailRelativeWorks: {},  //人员相关作品展示
+
+
+      //页面相关
+      pageNum: 1,
+      pageSize: 8,
+      total: '',
+
+      dialogVisible: false,
+      startYear: 0,
+      form: {},
+
+      //display控制
+      TypeSelectedDisplay: '',
+      orderSelectDisplay: '',
+      worksTableDisplay: 'none',
+      peopleTableDisplay: 'none',
+      rankTableDisplay: '',
+      pageDisplay: '',
+      worksDetailDisplay: '',
+      worksDetailRelativePeopleDisplay: '',
+      peopleDetailDisplay: '',
+      peopleDetailRelativeWorksDisplay: '',
+
+
+      //选项选中信息
+      searchSelected: '',
+      TypeSelected: '',
+      orderSelect: 'desc',
+
+      //选项
+      worksTypeOptions: [{
+        value: 'All',
+        label: 'All'
+      },{
+        value: 'tvShort',
+        label: 'tvShort'
+      }, {
+        value: 'movie',
+        label: 'movie'
+      }, {
+        value: 'tvMovie',
+        label: 'tvMovie'
+      }, {
+        value: 'short',
+        label: 'short'
+      }, {
+        value: 'tvMiniSeries',
+        label: 'tvMiniSeries'
+      }, {
+        value: 'videoGame',
+        label: 'videoGame'
+      }, {
+        value: 'tvEpisode',
+        label: 'tvEpisode'
+      }, {
+        value: 'video',
+        label: 'video'
+      },  {
+        value: 'tvSpecial',
+        label: 'tvSpecial'
+      }, {
+        value: 'tvSeries',
+        label: 'tvSeries'
+      }],
+      rankOrderOptions: [{
+        value: '',
+
+      }],
+      searchSelectedOptions: [{
+        value: 'searchByTconst',
+        label: 'search works by tconst'
+      },{
+        value: 'searchByOriginalName',
+        label: 'search works by original title'
+      },{
+        value: 'searchByNconst',
+        label: 'search person by nconst'
+      },{
+        value: 'searchByPrimaryName',
+        label: 'search person by primary name'
+      }
+      ],
+    },
+    created() {
+      this.changeStateToWorksOverview();
+      this.loadWorksTable(this.pageNum);
+    },
+    methods: {
+      loadTable(num) {
+        if(this.stateOfPage == 'works'){
+          this.loadWorksTable(num);
+        }
+        else if(this.stateOfPage == 'people'){
+          this.loadPeopleTable(num);
+        }
+        else if(this.stateOfPage == 'rank'){
+          this.loadRankTable(num);
+        }
+      },
+      loadWorksTable(num) {
+        this.pageNum = num;
+        this.changeStateToWorksOverview();
+        $.get("/title/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+          this.worksPageData = res.data;
+          this.total = res.data.totalElements;
+        });
+      },
+      loadPeopleTable(num) {
+        this.pageNum = num;
+        this.changeStateToPeopleOverview();
+        $.get("/name/page?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+          this.peoplePageData = res.data;
+          this.total = res.data.totalElements;
+        });
+      },
+      loadRankTable(num) {
+        this.pageNum = num;
+        this.changeStateToRankOverview();
+        $.get("/title/bestTitles?type=movie" + "&order=" + this.orderSelect + "&pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+          this.rankPageData = res.data;
+          this.total = res.data.totalElements;
+        });
+      },
+      btn() {
+        if(this.searchSelected == 'searchByTconst' || this.searchSelected == 'searchByOriginalName'){
+          this.changeStateToWorksDetail();
+          this.pageNum = 1;
+          if(this.searchSelected == 'searchByTconst'){
+            $.get("/title/" + this.input).then(res => {
+              this.worksDetailInformation = res.data;
+              this.total = res.data.totalElements;
+            });
+            $.get("/name/relativeNames/" + this.input + "?pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+              this.worksDetailRelativePeople = res.data;
+              this.total = res.data.totalElements;
+            });
+          }
+          else {
+            this.worksDetailRelativePeopleDisplay = 'none';
+            $.get("/title/originalTitle?originalTitle=" + this.input +"&pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+              this.worksDetailInformation = res.data;
+              this.total = res.data.totalElements;
+            });
+
+          }
+        }
+        else{
+          this.changeStateToPeopleDetail();
+          this.pageNum = 1;
+          if(this.searchSelected == 'searchByNconst') {
+            $.get("/name/nconst/" + this.input).then(res => {
+              this.peopleDetailInformation = res.data;
+              this.total = res.data.totalElements;
+            });
+            $.get("/title/relativeTitles?nconst=" + this.input + "&pageNum=" + this.pageNum + "&pageSize=" + this.pageSize).then(res => {
+              this.peopleDetailRelativeWorks = res.data;
+              this.total = res.data.totalElements;
+            });
+          }
+          else {
+            this.peopleDetailRelativeWorksDisplay = 'none';
+            $.get("/name/primaryName/" + this.input).then(res => {
+              this.peopleDetailInformation = res.data;
+              this.total = res.data.totalElements;
+            });
+          }
+        }
+        // $.get("/title/"+ this.input).then(res => {
+        //   console.log(res.data);
+        //   for(let i in res.data) {
+        //     console.log(i,res.data[i]);
+        //   }
+        //   this.startYear = res.data['start_year'];
+        //   console.log(this.startYear);
+        // })
+      },
+      typeSelectHandler(value) {
+        if(this.stateOfPage == 'works'){
+          // alert('This is typeSelectHandler -> loadWorks');
+          if(value == 'All'){
+            this.loadWorksTable(1);
+          }
+          else{
+            $.get("/title/type?type=" + value + "&pageNum=1&pageSize=8").then(res =>{
+                this.worksPageData = res.data;
+                this.total = res.data.totalElements;
+            })
+          }
+        }
+        else if(this.stateOfPage == 'rank'){
+          if(value == 'All'){
+            this.loadRankTable(1);
+          }
+          else{
+            $.get("/title/bestTitles?type=" + value + "&order=" + this.orderSelect + "&pageNum=1&pageSize=" + this.pageSize).then(res =>{
+              this.rankPageData = res.data;
+              this.total = res.data.totalElements;
+            })
+          }
+        }
+      },
+      orderSelectHandler(value) {
+        alert(value);
+        if(value == 1){
+        //  按照升序
+        }
+        else if(value == 2){
+        //  按照降序
+        }
+      },
+
+      //  切换页面状态
+      changeStateToWorksOverview() {
+        this.TypeSelectedDisplay = '';
+        this.worksTableDisplay = '';
+        this.peopleTableDisplay = 'none';
+        this.rankTableDisplay = 'none';
+        this.pageDisplay = '';
+        this.orderSelectDisplay = 'none';
+        this.worksDetailDisplay = 'none';
+        this.worksDetailRelativePeopleDisplay = 'none';
+        this.peopleDetailDisplay = 'none';
+        this.peopleDetailRelativeWorksDisplay = 'none';
+        this.stateOfPage = 'works';
+      },
+      changeStateToPeopleOverview() {
+        this.TypeSelectedDisplay = 'none';
+        this.worksTableDisplay = 'none';
+        this.peopleTableDisplay = '';
+        this.rankTableDisplay = 'none';
+        this.pageDisplay = '';
+        this.orderSelectDisplay = 'none';
+        this.worksDetailDisplay = 'none';
+        this.worksDetailRelativePeopleDisplay = 'none';
+        this.peopleDetailDisplay = 'none';
+        this.peopleDetailRelativeWorksDisplay = 'none';
+        this.stateOfPage = 'people';
+      },
+      changeStateToRankOverview() {
+        this.TypeSelectedDisplay = '';
+        this.worksTableDisplay = 'none';
+        this.peopleTableDisplay = 'none';
+        this.rankTableDisplay = '';
+        this.pageDisplay = '';
+        this.orderSelectDisplay = '';
+        this.worksDetailDisplay = 'none';
+        this.worksDetailRelativePeopleDisplay = 'none';
+        this.peopleDetailDisplay = 'none';
+        this.peopleDetailRelativeWorksDisplay = 'none';
+        this.stateOfPage = 'rank';
+      },
+      changeStateToWorksDetail(){
+        this.TypeSelectedDisplay = '';
+        this.worksTableDisplay = 'none';
+        this.peopleTableDisplay = 'none';
+        this.rankTableDisplay = 'none';
+        this.pageDisplay = 'none';
+        this.orderSelectDisplay = 'none';
+        this.worksDetailDisplay = '';
+        this.worksDetailRelativePeopleDisplay = '';
+        this.peopleDetailDisplay = 'none';
+        this.peopleDetailRelativeWorksDisplay = 'none';
+        this.stateOfPage = 'works';
+      },
+      changeStateToPeopleDetail(){
+        this.TypeSelectedDisplay = '';
+        this.worksTableDisplay = 'none';
+        this.peopleTableDisplay = 'none';
+        this.rankTableDisplay = 'none';
+        this.pageDisplay = 'none';
+        this.orderSelectDisplay = 'none';
+        this.worksDetailDisplay = 'none';
+        this.worksDetailRelativePeopleDisplay = 'none';
+        this.peopleDetailDisplay = '';
+        this.peopleDetailRelativeWorksDisplay = '';
+        this.stateOfPage = 'people';
+      },
+
+      //  测试语句
+      test() {
+        alert('This is test!');
+      }
+    },
+  })
+</script>
+
+</body>
+</html>
